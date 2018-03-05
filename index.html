@@ -1,0 +1,62 @@
+<!doctype html>
+<head>
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/black-tie/jquery-ui.min.css" >
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+<script
+  src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"
+  integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
+  crossorigin="anonymous"></script>
+ 
+<script language="JavaScript" type="text/javascript">
+ 
+$(document).ready(function(){
+    $("#FromDate").datepicker({
+        onSelect: function(selected) {
+          $("#ToDate").datepicker("option","minDate", selected)
+        }
+    });
+    $("#ToDate").datepicker({
+        onSelect: function(selected) {
+           $("#FromDate").datepicker("option","maxDate", selected)
+        }
+    });
+});
+</script>
+<script language="JavaScript" type="text/javascript">
+// To calulate difference b/w two dates
+function CalculateDiff() {
+ 
+    if($("#FromDate").val()!="" && $("#ToDate").val()!=""){
+ 
+var From_date = new Date($("#FromDate").val());
+var To_date = new Date($("#ToDate").val());
+var diff_date =  To_date - From_date;
+ 
+var years = Math.floor(diff_date/31536000000);
+var months = Math.floor((diff_date % 31536000000)/2628000000);
+var days = Math.floor(((diff_date % 31536000000) % 2628000000)/86400000);
+$("#Result").html(years+" year(s) "+months+" month(s) "+days+" and day(s)");
+//alert( years+" year(s) "+months+" month(s) "+days+" and day(s)");
+}
+else{
+    alert("Please select dates");
+    return false;
+}
+}
+ 
+</script>
+</head>
+<body>
+Start Date <input type="text" id="FromDate" readonly>   End Date  <input type="text" id="ToDate" readonly>
+  <br />
+ 
+  <div style="margin:1%;" id="Result"> </div>
+ 
+  <button type="button" onClick="CalculateDiff();" style="padding:1px; color:#0C6;margin-left:15%;margin-top:5%" >Calculate </button>
+
+</body>
+</html>
